@@ -1,0 +1,86 @@
+<md-dialog>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Configuration</h2>
+      <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon>close</md-icon>
+        </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+  <div class="md-dialog-content">
+    <md-tabs md-dynamic-height md-border-bottom md-autoselect md-swipe-content>
+      <md-tab label="Basic Option">
+        <md-content class="md-padding">
+          <h2 class="md-display-1">Basic Option</h2>
+          <div layout="column" flex layout-align="center" layout-padding layout-margin>
+            <div layout="row" class="config-row" flex>
+              <div class="config-label-icon" layout="column" layout-align="center"><md-icon>folder</md-icon></div>
+              <div class="config-label" layout="column" layout-align="center" flex>Select Default Music folder</div>
+              <md-button class="md-raised" aria-label="default folder" ng-click="select_folder()">Select Folder</md-button>
+              <div class="config-label-output" layout="column" layout-align="center" flex>{{tmp.deafult_folder}}</div>
+              <div class="config-label-icon" layout="column" layout-align="center"><md-icon class="md-accent">info</md-icon><md-tooltip md-direction="top">the default music folder will be used to scan for music , and also to save your play list.</md-tooltip></div>
+            </div>
+            <div layout="row" class="config-row" flex>
+              <div class="config-label-icon" layout="column" layout-align="center"><md-icon>search</md-icon></div>
+              <div class="config-label" layout="column" layout-align="center" flex>Retrive and correct music information from the internet</div>
+              <!-- <md-button class="md-raised" aria-label="default folder">Select Folder</md-button> -->
+              <!-- <div class="config-label-output" layout="column" layout-align="center" flex>c:/hvh/dfdfd/dfdfd/</div> -->
+              <div flex layout-align="center">
+                <md-switch ng-model="tmp.internet_fetch" aria-label="internet fetcher" class="md-warn" flex layout-align="center">
+                  <!-- Switch 2 (md-warn): {{ tmp.internet_fetch }} -->
+                </md-switch>
+              </div>
+              <div class="config-label-icon" layout="column" layout-align="center"><md-icon class="md-accent">info</md-icon><md-tooltip md-direction="top">this feautre allow us to look for more information about the music from the net , like album picture release year etc ... .</md-tooltip></div>
+            </div>
+          </div>
+
+        </md-content>
+      </md-tab>
+      <md-tab label="how i look ?">
+        <md-content class="md-padding">
+          <h2 class="md-display-1">Theme & Feeling Option</h2>
+          <div layout="column" flex layout-align="center" layout-padding layout-margin>
+            <div layout="row" class="config-row" flex>
+              <div class="config-label-icon" layout="column" layout-align="center"><md-icon>animation</md-icon></div>
+              <div class="config-label" layout="column" layout-align="center" flex>Select your prefer animation style</div>
+              <div flex layout-align="center">
+                <md-select ng-model="tmp.animation" aria-label="select animation style">
+                  <md-option ng-repeat="style in appInfotmp.animation_styles" ng-value="style.fn">
+                    {{style.name}}
+                  </md-option>
+                </md-select>
+              </div>
+              <div class="config-label-icon" layout="column" layout-align="center"><md-icon class="md-accent">info</md-icon><md-tooltip md-direction="top">the default music folder will be used to scan for music , and also to save your play list.</md-tooltip></div>
+            </div>
+            <div layout="row" class="config-row" flex>
+              <div class="config-label-icon" layout="column" layout-align="center"><md-icon>screen</md-icon></div>
+              <div class="config-label" layout="column" layout-align="center" flex>Play diaporama When more Picture avilable</div>
+              <div flex layout-align="center">
+                <md-switch ng-model="tmp.diparama" aria-label="internet fetcher" class="md-warn" flex layout-align="center">
+                </md-switch>
+              </div>
+              <div class="config-label-icon" layout="column" layout-align="center"><md-icon class="md-accent">info</md-icon><md-tooltip md-direction="top">the default music folder will be used to scan for music , and also to save your play list.</md-tooltip></div>
+            </div>
+          </div>
+        </md-content>
+      </md-tab>
+      <md-tab label="BuG ? Request !">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Bug reporting & requests</h1>
+          <p>If you found probleme in this application or have a bug with it , you can reported for us , if you are devloper or GeeK please reported to us throw GitHub project with all information that you have  . and if your not you can us <a href="#">this email</a> or throw the other contact why that you can find in the information section .</p>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+    <div layout="row" layout-align="end">
+      <md-button class="md-raised md-primary" ng-click="save()">save</md-button>
+      <md-button ng-click="cancel()" class="md-raised md-warn">Cancel</md-button>
+    </div>
+    <p class="mark-note">
+      <small>since this is the beta version , somthings may not run well , but don't punk w've make sure that nothing will harm your device . if you have or found some bug please reported to us to work on it and fix it as soon as possible <br>
+      <i>some feautre still exprimental, and we still working on theme . so don't wory if they didn't work </i></small>
+    </p>
+  </div>
+</md-content>
+</md-dialog>

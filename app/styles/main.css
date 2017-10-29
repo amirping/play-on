@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC|Zilla+Slab+Highlight');
+body {
+  height: 100vh;
+  -webkit-user-select: none;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0ae;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(.5, rgba(255, 255, 255, .2)), color-stop(.5, transparent), to(transparent));
+}
+
+.md-toolbar-tools {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.md-icon-button {
+  -webkit-app-region: no-drag;
+}
+
+.main .center-player {
+  /*background: #4d54f5;*/
+  background: #ffd89b;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #19547b, #ffd89b);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #19547b, #ffd89b);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  position: relative;
+}
+
+.main .player-list {
+  background: #6167f2;
+}
+
+.side-menu {
+  background: rgba(255, 255, 255, 0.69);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0.5;
+}
+
+.side-menu:hover {
+  opacity: 1;
+  transition: all 300ms;
+}
+
+.main .control-player {
+  /*background: #34388b;*/
+  background: #667db6;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  position: relative;
+}
+
+.main .control-player .play-btn md-icon {
+  color: white;
+  font-size: 48px;
+  padding: 0px;
+  height: 48px;
+  width: 48px;
+}
+
+.active-btn {
+  color: white;
+}
+
+.nrml-btn {
+  padding: 0px !important;
+  height: 24px !important;
+  width: 24px !important;
+}
+
+.slider-holder {
+  margin-left: 15px;
+  margin-right: 10px;
+}
+
+.main .control-player .play-btn {
+  height: 48px;
+  width: 48px;
+  padding: 0px;
+}
+.cmd
+{
+  position: relative;
+  overflow: hidden;
+}
+.cmd .search
+{
+  position: absolute;
+  left: 100%;
+  width: 100%;
+  /*height: 100%;*/
+  z-index: 1200;
+  /*visibility:hidden;*/
+  background: rgba(233, 70, 104, 0.43);
+  transition: all 500ms;
+}
+.cmd .search .searchInput
+{
+  border: none;
+  background: transparent ;
+  color: rgb(101, 91, 100);
+  outline: none;
+  padding: 3px;
+}
+.cmd .main-cmd
+{
+  transition: all 500ms;
+  position: relative;
+  /*left: 100%;
+  width: 100%;
+  height: 100%;*/
+}
+.cmd .main-cmd-hide
+{
+  margin-right: 100%;
+  transition: all 500ms;
+  visibility: collapse;
+}
+.cmd .show-search
+{
+  left: 0;
+  transition: all 500ms;
+}
+
+
+/* Rules for sizing the icon. */
+
+.custom-slider.rzslider .rz-bar {
+  background: #ffe4d1;
+  height: 2px;
+}
+
+.custom-slider.rzslider .rz-selection {
+  background: orange;
+}
+
+.custom-slider.rzslider .rz-pointer {
+  width: 8px;
+  height: 16px;
+  top: auto;
+  /* to remove the default positioning */
+  bottom: 0;
+  background-color: #333;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.custom-slider.rzslider .rz-pointer:after {
+  display: none;
+}
+
+.custom-slider.rzslider .rz-bubble {
+  bottom: 14px;
+}
+
+.custom-slider.rzslider .rz-limit {
+  font-weight: bold;
+  color: orange;
+}
+
+.custom-slider.rzslider .rz-tick {
+  width: 1px;
+  height: 10px;
+  margin-left: 4px;
+  border-radius: 0;
+  background: #ffe4d1;
+  top: -1px;
+}
+
+.custom-slider.rzslider .rz-tick.rz-selected {
+  background: orange;
+}
+
+.animate-show-hide.ng-hide {
+  opacity: 0;
+}
+
+.animate-show-hide.ng-hide-add, .animate-show-hide.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.volume {
+  position: relative;
+  background: rgba(165, 85, 246, 0.72);
+  width: 200px;
+  height: auto;
+  z-index: 99;
+  margin-bottom: 10%;
+}
+
+.boundme {
+  margin-right: 10px;
+}
+
+.titles-main {
+  padding: 0px;
+  color: white;
+}
+
+.titles-main .title {
+  font-size: 4em;
+  background: rgba(218, 19, 19, 0.56);
+  font-family: 'Amatic SC', cursive;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0px;
+}
+
+.titles-main .artist {
+  font-size: 2.1em;
+  margin-left: 10px;
+  font-family: 'Zilla Slab Highlight', cursive;
+  text-transform: capitalize;
+  color: black;
+}
+
+.titles-main .album {
+  color: white;
+  font-size: 1.8em;
+  font-family: 'Zilla Slab Highlight', cursive;
+  margin-left: 10px;
+}
+.icon-red
+{
+  color: red !important;
+}
+
+.overlay-basic {
+  /*background-color: rgba(230, 28, 82, 0.49);*/
+  -webkit-box-shadow: inset 0px 0px 136px -19px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 136px -19px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 136px -19px rgba(0, 0, 0, 0.75);
+}
+
+.porgress-bar-optim {
+  position: absolute !important;
+  top: 0 !important;
+  height: 3px !important;
+  overflow: auto !important;
+}
+
+.visualizer {
+  margin: 0px;
+}
+/* about info sub view */
+.aboutinfo-version
+{
+  padding: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 3px;
+  text-align: center;
+  color: black;
+  background: rgb(233, 74, 20);
+}
+.aboutinfo-version span
+{
+  color: white;
+}
+/* configuration sub view */
+.mark-note
+{
+  color: rgb(135, 135, 135);
+  border: 1px dotted rgba(156, 156, 156, 0.48);
+  padding: 4px;
+}
+.config-row
+{
+}
+.config-row:hover
+{
+  background: rgba(180, 180, 180, 0.56);
+  transition: all 200ms;
+}
+.config-row .config-label-icon
+{
+  margin-right: 10px;
+}
+.config-row .config-label
+{
+  text-transform: capitalize;
+}
+.config-row .config-label-output
+{
+  text-align: center;
+  color: rgb(77, 77, 77);
+}

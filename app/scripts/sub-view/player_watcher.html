@@ -1,0 +1,32 @@
+<div class="player-watcher" back-img="{{play_c}}" layout="column" flex>
+  <div class="overlay-basic" ng-style="{'background-color': overlay_bc,'background-image':overlay_bi}" layout-padding layout="column" flex>
+    <div layout="column" class="titles-main" layout-margin layout-padding flex="20" layout-align="center">
+      <div layout="row">
+        <div layout="column" layout-align="center">
+          <span class="artist">
+            {{list[play_c].artist}}
+          </span>
+        </div>
+        <div layout="column" layout-align="center">
+          <span class="album">
+          {{list[play_c].album}}
+        </span>
+        </div>
+      </div>
+    </div>
+    <div layout="column" flex layout-align="center">
+      <div layout="row" class="titles-main" layout-align="center">
+        <span class="title" id="player_title_id" ng-if="list[play_c].title">
+          {{list[play_c].title}}
+        </span>
+        <span class="title" id="player_title_id" ng-if="!list[play_c].title">
+          {{list[play_c].name}}
+        </span>
+      </div>
+      <div class="viz-zone" layout="row" layout-align="center">
+        <!-- <p5 sketch="newsket"></p5> -->
+        <canvas class="visualizer" id="canv_viz" width="{{vals.visualizer_width}}" height="{{vals.visualizer_height}}"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

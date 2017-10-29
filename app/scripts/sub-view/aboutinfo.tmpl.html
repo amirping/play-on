@@ -1,0 +1,27 @@
+<md-dialog ng-controller="mainctrl">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>about PlayON</h2>
+      <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon>close</md-icon>
+        </md-button>
+    </div>
+  </md-toolbar>
+  <div class="md-dialog-content">
+    <h3>Welcome GeeK</h3>
+    <span class="aboutinfo-version">{{appInfo.version}}<span>{{appInfo.versionState}}</span></span>
+    <p>PlayON is a music player , created to make playing music on desktop more elegent and beutifuel. by adding such great feature like the music fetcher and the analyser , large picture and some great animation .</p>
+    <p>PlayON is an open project , devloped on electron & angularjs </p>
+    <li>Created and maintained with <md-icon>favorite</md-icon> by {{appInfo.owner}} </li>
+    <li>Free and open source</li>
+    <p>to contact the developer you can reach me throw those links <a ng-click="openLink('https://www.facebook.com/anonymousping')" href="#">facebook</a> , <a ng-click="openLink('https://github.com/amirping')" href="#">github</a>  , <a href="#" ng-click="openLink('mailto:{{appInfo.email}}')">email</a> </p>
+    <h4>Privacy Policy</h4>
+    <li>PlayON ("App") is operated by {{appInfo.owner}} ("We").</li>
+    <li>We do not collect personal information.</li>
+    <li>We use Google Analytics, Gauges and Sentry to collect anonymous traffic information and improve the app.</li>
+    <li>The app uses cookies to store user preferences.</li>
+    <li>By using the app, you signify your acceptance of this policy. If you do not agree to this policy, please do not use the app.</li>
+    <li>If you have any questions regarding privacy, please email {{appInfo.email}} </li>
+  </div>
+</md-dialog>

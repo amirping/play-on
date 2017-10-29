@@ -1,0 +1,4 @@
+Application name	playON
+API key	f029d67963b77170bafac0ea54648f19
+Shared secret	10dead914cf65545a912a07dbe21dacc
+Registered to	pingghost

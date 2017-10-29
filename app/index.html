@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html ng-app="playon">
+<head>
+  <meta charset="utf-8">
+  <title>PLayON</title>
+  <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../node_modules/angular-material/angular-material.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- <link rel="stylesheet" href="styles/configuration_vertical_tabs.css"> -->
+  <script src="../node_modules/angular/angular.js" charset="utf-8"></script>
+  <script src="../node_modules/angular-aria/angular-aria.js" charset="utf-8"></script>
+  <script src="../node_modules/angular-animate/angular-animate.js" charset="utf-8"></script>
+  <script src="../node_modules/angular-material/angular-material.js" charset="utf-8"></script>
+  <!-- <script src="../node_modules/angular-audio/app/angular.audio.js" charset="utf-8"></script> -->
+  <script src="../node_modules/angularjs-slider/dist/rzslider.min.js" charset="utf-8"></script>
+  <script src="../node_modules/howler/dist/howler.js" charset="utf-8"></script>
+  <link rel='stylesheet' href='../node_modules/angular-loading-bar/build/loading-bar.min.css' type='text/css' media='all' />
+  <script type='text/javascript' src='../node_modules/angular-loading-bar/build/loading-bar.min.js'></script>
+  <script src="scripts/index.js" charset="utf-8"></script>
+</head>
+<body ng-controller="mainctrl" layout="column" flex>
+  <div layout="column" flex="100">
+    <div class="toolbar">
+      <md-toolbar class="md-hue-2">
+        <div class="md-toolbar-tools">
+          <h2 flex md-truncate>PlayON</h2>
+          <md-button class="md-icon-button" aria-label="remove" ng-click="minimize()">
+            <md-icon>remove</md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="fullscreen exit" ng-if="maxormin" ng-click="maxorno()">
+            <md-icon>fullscreen_exit</md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="fullscreen" ng-if="!maxormin" ng-click="maxorno()">
+            <md-icon>fullscreen</md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="close" ng-click="closeapp()">
+            <md-icon>close</md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+    </div>
+    <div class="main" layout="column" flex>
+      <div class="center-player" flex="90" layout="row">
+        <div class="player-vis" flex layout="column">
+          <ng-include src="current.view" flex layout="column"></ng-include>
+        </div>
+        <!-- <div class="player-list" flex-gt-sm="20" hide-sm hide-xs show-gt-sm layout="column"> -->
+        <!-- add to line blow to change the list style md-is-locked-open="list_is_open"  -->
+        <md-sidenav md-component-id="music_list" class="md-sidenav-right md-whiteframe-4dp">
+          <md-toolbar class="md-accent md-hue-1">
+            <div class="md-toolbar-tools">
+              <md-truncate flex>
+                Music List
+              </md-truncate>
+            </div>
+          </md-toolbar>
+          <div class="cmd" layout="row" layout-align="center">
+            <div class="search" flex layout="row">
+              <input type="text" name="searchbox" ng-model="searchString" class="searchInput" placeholder="Search here" flex>
+              <md-button aria-label="search" class="md-icon-button" ng-click="closeSearch()">
+                <md-icon>close</md-icon>
+                <md-tooltip md-direction="left">close the search</md-tooltip>
+              </md-button>
+            </div>
+            <div flex layout="row" class="main-cmd" layout-align="center">
+              <md-button aria-label="select" ng-click="selectFile()" class="md-icon-button">
+                <md-icon>add</md-icon>
+                <md-tooltip md-direction="left">add more music</md-tooltip>
+              </md-button>
+              <md-button aria-label="save" ng-click="null" class="md-icon-button">
+                <md-icon>save</md-icon>
+                <md-tooltip md-direction="left">save play list</md-tooltip>
+              </md-button>
+              <md-button aria-label="search" class="md-icon-button" ng-click="showSearch()">
+                <md-icon>search</md-icon>
+                <md-tooltip md-direction="left">search inside list</md-tooltip>
+              </md-button>
+              <md-menu>
+                <md-button aria-label="more option" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                  <md-icon>more</md-icon>
+                </md-button>
+                <md-menu-content>
+                  <md-menu-item>
+                    <md-button ng-click="null">
+                      <md-icon md-menu-origin>open</md-icon>
+                      Load Play List
+                    </md-button>
+                  </md-menu-item>
+                  <md-menu-item ng-if="!vals.editList">
+                    <md-button aria-label="edit the list" ng-disabled="ListSize() == 0" ng-click="vals.editList = true">
+                      <md-icon>edit</md-icon>
+                      Edit list
+                    </md-button>
+                  </md-menu-item>
+                  <md-menu-item ng-if="vals.editList">
+                    <md-button aria-label="done edit" ng-click="vals.editList = false">
+                      <md-icon>done</md-icon>
+                      Done editing
+                    </md-button>
+                  </md-menu-item>
+                  <md-menu-divider></md-menu-divider>
+                  <md-menu-item>
+                    <md-button ng-click="null">
+                      <md-icon>clear</md-icon>
+                      Clear the list
+                    </md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+            </div>
+          </div>
+          <md-content flex>
+            <md-list>
+              <md-subheader>Local files</md-subheader>
+              <md-list-item class="md-2-line" ng-repeat="item in list track by $index" ng-click="playthis(item)">
+                <img ng-src="{{item.pic}}" class="md-avatar" alt="" />
+                <div class="md-list-item-text">
+                  <h3 ng-if="item.title.length > 0" md-truncate>{{item.title}}</h3>
+                  <h3 ng-if="!item.title" md-truncate>{{item.name}}</h3>
+                  <h4 ng-if="item.artist">- {{item.artist}}</h4>
+                  <!-- <p ng-if="item.album">- {{item.album}}</p> -->
+                </div>
+                <md-button class="md-primary md-icon-button" ng-click="removeFromList($index)" ng-if="vals.editList" aria-label="remove this item">
+                  <md-icon class="icon-red">remove</md-icon>
+                </md-button>
+              </md-list-item>
+            </md-list>
+          </md-content>
+        </md-sidenav>
+        <!-- </div> -->
+        <div class="side-menu md-whiteframe-4dp" layout="row" layout-align="center">
+          <div layout="column">
+            <md-button class="md-icon-button" aria-label="play list" ng-click="music_list_show_hide()">
+              <md-icon>queue_music</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="play list" ng-click="config($event)">
+              <md-icon>settings</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="play list" ng-click="aboutInfo($event)">
+              <md-icon>info</md-icon>
+            </md-button>
+          </div>
+        </div>
+      </div>
+      <div class="control-player" id="control-player" flex="10" layout="column" layout-align="center" ng-mouseleave="hidevolume = true">
+        <md-progress-linear class="md-warn porgress-bar-optim" flex ng-if="(!readonly && !vals.ready)" md-mode="indeterminate"></md-progress-linear>
+        <div layout="row" layout-align="center">
+          <div layout="column" layout-align="center">
+            <md-button class="md-icon-button play-btn" ng-disabled="readonly" aria-label="play" ng-click="playmedia()">
+              <md-icon class="material-icons.md-48" ng-if="(!media.playing())">play_circle_outline</md-icon>
+              <md-icon class="material-icons.md-48" ng-if="media.playing()">pause_circle_outline</md-icon>
+            </md-button>
+          </div>
+          <div layout="column" layout-align="center">
+            <md-button class="md-icon-button nrml-btn" aria-label="stop" ng-click='media.stop()'>
+              <md-icon>stop</md-icon>
+            </md-button>
+          </div>
+          <!-- <md-button class="md-icon-button" aria-label="play list" ng-click="music_list_show_hide()">
+          <md-icon>queue_music</md-icon>
+        </md-button> -->
+          <div layout="column" layout-align="center">
+            <md-button class="md-icon-button nrml-btn" aria-label="shuffle" ng-click='vals.shuffle ? vals.shuffle = false : vals.shuffle = true'>
+              <md-icon ng-if="!vals.shuffle">shuffle</md-icon>
+              <md-icon ng-if="vals.shuffle" class="active-btn">shuffle</md-icon>
+            </md-button>
+          </div>
+          <div layout="column" layout-align="center">
+            <md-button class="md-icon-button nrml-btn" aria-label="repeat" ng-click='vals.repeat ? vals.repeat = false : vals.repeat = true'>
+              <md-icon ng-if="!vals.repeat">repeat</md-icon>
+              <md-icon class="active-btn" ng-if="vals.repeat">repeat</md-icon>
+            </md-button>
+          </div>
+          <div flex layout="column" layout-align="center" class="slider-holder">
+            <md-slider flex ng-change="seekmedia(vals.pos)" class="md-warn" ng-disabled="readonly" ng-model="vals.pos" min="0" max="{{media.duration()}}" aria-label="rating">
+            </md-slider>
+            <!-- past back to top line ng-if="!(!readonly && !vals.ready)" -->
+            <!-- <md-progress-linear class="md-warn" flex ng-if="(!readonly && !vals.ready)" md-mode="indeterminate"></md-progress-linear> -->
+          </div>
+          <div ng-if="vals.ready" layout="column" layout-align="center" hide-xs>{{media.seek() | trackTime}} /{{media.duration() | trackTime}}</div>
+          <div layout="column" layout-align="center">
+            <md-button class="md-icon-button" aria-label="volum" ng-click="muteMedia()" ng-mouseover="hidevolume = false">
+              <md-icon ng-if="sound.volume != 0">volume_up</md-icon>
+              <md-icon ng-if="sound.volume == 0">volume_off</md-icon>
+            </md-button>
+          </div>
+          <div ng-hide="hidevolume" class="animate-show-hide boundme" ng-mouseleave="hidevolume = true">
+            <md-slider md-discrete ng-disabled="readonly" ng-model="vals.volume" step="0.05" min="0" max="1" aria-label="volume">
+            </md-slider>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

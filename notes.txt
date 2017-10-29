@@ -1,0 +1,13 @@
+
+1/ make google icon local --not yet
+3/ add the other comp - done
+4/ make player work - done
+5/ add file/s & folder select - done
+6/ add online player (YouTube / sound cloud ) - feature
+7/ playlist create
+8/ fix the case when there is no internet access or server down - done (as plus add a notifies for user)
+9/ fix the visualizer size when title change - done
+*/ filter out -done
+*/ auto scan
++/ movie support
+(PS D:\projects\PlayonProject\playon> electron .)
