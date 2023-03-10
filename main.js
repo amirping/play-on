@@ -7,12 +7,19 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+require('@electron/remote/main').initialize()
+
 // Keep reference of main window because of GC
 var mainWindow = null;
 // Quit when all windows are closed
 app.on('window-all-closed', function() {
     app.quit();
 });
+
+app.on('browser-window-created', (_, window) => {
+    require("@electron/remote/main").enable(window.webContents)
+})
+
 // When application is ready, create application window
 app.on('ready', function() {
     // Create main window
@@ -25,7 +32,12 @@ app.on('ready', function() {
         minWidth:900,
         minHeight:600,
         toolbar: false,
-        frame:false
+        frame:false,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+        }
+
     });
     // mainWindow.setMinimumSize(900, 600);
     mainWindow.setMenu(null);

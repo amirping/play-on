@@ -1,9 +1,12 @@
-const remote = require('electron').remote;
-const {dialog} = require('electron').remote;
-const shell = require('electron').remote.shell;
-var mainWindow = require('electron').remote.getCurrentWindow();
+const remote = require('@electron/remote');
+const {dialog} = require('@electron/remote');
+const {shell} = require('@electron/remote');
+var {getCurrentWindow: mainWindow} = require('@electron/remote');
 var fs = require('fs');
 var mm = require('musicmetadata');
+// const parseStream = require('music-metadata');
+// import * as mm from 'music-metadata-browser';
+const mmb = require('music-metadata-browser');
 var Datastore = require('nedb');
 // end loader
 var table_of_pic;
@@ -195,6 +198,7 @@ var app = angular.module('playon', ["ngAnimate", "ngMaterial","ngAria",  "rzModu
         }
       }
       var watcherseeking ;
+      console.log("about to play");
       $scope.media = new Howl({
         src: [path],
         onend: function() {
@@ -498,10 +502,9 @@ var app = angular.module('playon', ["ngAnimate", "ngMaterial","ngAria",  "rzModu
           'multiSelections',
           'createDirectory'
         ]
-      }, function(files) {
-        if (files && files.length) {
-          console.log(files);
-          for (file of files) {
+      }).then(result => {
+        if (result.canceled == false) {
+          for (file of result.filePaths) {
             $scope.$apply(function() {
               var filename = file.replace(/^.*[\\\/]/, '');
               filename = filename.replace(/\.[^/.]+$/, "");
@@ -517,16 +520,43 @@ var app = angular.module('playon', ["ngAnimate", "ngMaterial","ngAria",  "rzModu
                 'album': album,
                 'fetched': false
               };
+              console.log('nice');
               $scope.fetcher($scope.list[filename]);
             });
             console.log($scope.list);
             // call fetcher meta data fn
-          }
-        } else {
-          dialog.showMessageBox(mainWindow,{title:'Hi There',type:'warning',message:'You didnt select any file for now'});
-          // alert("no file selected");
-        }
-      });
+          }}}).catch(err => {
+        console.log(err)
+      })
+      // function(files) {
+      //   if (files && files.length) {
+      //     console.log(files);
+      //     for (file of files) {
+      //       $scope.$apply(function() {
+      //         var filename = file.replace(/^.*[\\\/]/, '');
+      //         filename = filename.replace(/\.[^/.]+$/, "");
+      //         var pathtofile = file;
+      //         var artist = "unknown";
+      //         var album = "unknown";
+      //         var title = "unknown";
+      //         $scope.list[filename] = {
+      //           'name': filename,
+      //           'path': file,
+      //           "artist": artist,
+      //           'title': title,
+      //           'album': album,
+      //           'fetched': false
+      //         };
+      //         $scope.fetcher($scope.list[filename]);
+      //       });
+      //       console.log($scope.list);
+      //       // call fetcher meta data fn
+      //     }
+      //   } else {
+      //     dialog.showMessageBox(mainWindow,{title:'Hi There',type:'warning',message:'You didnt select any file for now'});
+      //     // alert("no file selected");
+      //   }
+      // });
     }
     $scope.fetcher = function(obj) {
       console.log("obj have been sended ");
@@ -539,6 +569,12 @@ var app = angular.module('playon', ["ngAnimate", "ngMaterial","ngAria",  "rzModu
       console.log("run meta fetcher");
       if (path.length > 0) {
         // load meta data
+        console.log("path is not empty", path);
+        const stream = fs.createReadStream(path);
+        mmb.parseNodeStream(stream).then(metaaa => {
+          console.log('metaaa')
+          console.log(metaaa);
+        });
         var readableStream = fs.createReadStream(path);
         var parser = mm(readableStream, function(err, metadata) {
           if (err) throw err;
@@ -557,14 +593,15 @@ var app = angular.module('playon', ["ngAnimate", "ngMaterial","ngAria",  "rzModu
             obj.pic = url;
           } else {
             if ($scope.user_config.internet_fetch == true) {
+              const title =  metadata.title && metadata.title.length > 0 ? metadata.title : obj.name
               // no pic in local tags so fetch from api
-              var url_req = 'http://ws.audioscrobbler.com/2.0/?method=track.search&limit=1&track=' + metadata.title + '&api_key=f029d67963b77170bafac0ea54648f19&format=json';
+              var url_req = 'http://ws.audioscrobbler.com/2.0/?method=track.search&limit=2&track=' + title + '&api_key=f029d67963b77170bafac0ea54648f19&format=json';
               // if (metadata.artist[0].length > 0 && !(metadata.artist[0] == "unknown")) {
               //   url_req = 'http://ws.audioscrobbler.com/2.0/?method=track.search&limit=1&track='+metadata.title+'&artist='+metadata.artist[0]+'&api_key=f029d67963b77170bafac0ea54648f19&format=json';
               // }
               console.log("no pic igonna look on the net ");
-              $http.post(url_req).then(function(resapi) {
-                // console.log(resapi);
+              $http.get(url_req).then(function(resapi) {
+                console.log(resapi);
                 if (angular.isUndefined(resapi.data.results)) {
                   console.log("no internet");
                   return false;
